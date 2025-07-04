@@ -2,10 +2,12 @@ import { InvalidCompanyParamException } from '../exceptions'
 import { CompanyProps } from '../types/company.props'
 import { CNPJ, ID } from '../value-objects'
 import { BaseModel } from './base'
+import { CostCenter } from './cost-center'
 
 export class Company extends BaseModel<ID> {
   private readonly name: string
   private readonly document: CNPJ
+  private readonly costCenter: CostCenter[] = []
 
   private constructor(id: ID, name: string, document: CNPJ) {
     super(id)
@@ -24,11 +26,19 @@ export class Company extends BaseModel<ID> {
     }
   }
 
+  public addCostCenter(costCenter: CostCenter): void {
+    this.costCenter.push(costCenter)
+  }
+
   getName(): string {
     return this.name
   }
 
   getDocument(): string {
     return this.document.getValue()
+  }
+
+  getCostCenters(): CostCenter[] {
+    return [...this.costCenter]
   }
 }
