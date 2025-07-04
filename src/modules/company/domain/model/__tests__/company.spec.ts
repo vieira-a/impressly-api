@@ -14,10 +14,21 @@ describe('Company Model', () => {
     )
   })
 
-  it('should throw an InvalidCompanyParamException if name undefined', () => {
+  it('should throw an InvalidCompanyParamException if name is undefined', () => {
     const invalidProps: Partial<CompanyProps> = {
       ...validCompanyProps,
       name: undefined,
+    }
+
+    expect(() => Company.create(invalidProps as CompanyProps)).toThrow(
+      InvalidCompanyParamException,
+    )
+  })
+
+  it('should throw an InvalidCompanyParamException if name is null', () => {
+    const invalidProps: Partial<CompanyProps> = {
+      ...validCompanyProps,
+      name: null as unknown as string,
     }
 
     expect(() => Company.create(invalidProps as CompanyProps)).toThrow(
