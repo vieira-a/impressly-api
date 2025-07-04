@@ -1,5 +1,5 @@
 import { InvalidDocumentException } from '../exceptions'
-import { CNPJValidator } from '../validators/cnpj.validator'
+import { CNPJValidator } from '../validators'
 
 export class CNPJ {
   private readonly value: string
