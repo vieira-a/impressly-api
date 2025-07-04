@@ -1,15 +1,15 @@
 export abstract class BaseModel<ID> {
-  private readonly id: ID
-  private readonly createdAt: Date
-  private updatedAt: Date
-  private deletedAt?: Date | null
+  protected readonly id: ID
+  protected readonly createdAt: Date
+  protected updatedAt: Date
+  protected deletedAt?: Date | null
 
-  protected constructor(id: ID, createdAt: Date, updatedAt: Date, deletedAt: Date | null) {
+  protected constructor(id: ID) {
     const now = new Date()
     this.id = id
-    this.createdAt = createdAt ?? now
-    this.updatedAt = updatedAt ?? now
-    this.deletedAt = deletedAt ?? null
+    this.createdAt = now
+    this.updatedAt = now
+    this.deletedAt = null
   }
 
   getId(): ID {

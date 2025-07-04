@@ -7,23 +7,15 @@ export class Company extends BaseModel<ID> {
   private readonly name: string
   private readonly document: CNPJ
 
-  private constructor(
-    id: ID,
-    name: string,
-    document: CNPJ,
-    createdAt: Date,
-    updatedAt: Date,
-    deletedAt: Date | null,
-  ) {
-    super(id, createdAt, updatedAt, deletedAt)
+  private constructor(id: ID, name: string, document: CNPJ) {
+    super(id)
     this.name = name
     this.document = document
     this.validate()
   }
 
   public static create(props: CompanyProps): Company {
-    const now = new Date()
-    return new Company(props.id, props.name, props.document, now, now, null)
+    return new Company(props.id, props.name, props.document)
   }
 
   private validate(): void {
