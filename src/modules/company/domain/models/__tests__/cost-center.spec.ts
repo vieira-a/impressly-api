@@ -26,4 +26,18 @@ describe('Cost Center Model', () => {
       },
     )
   })
+
+  describe('Success case', () => {
+    it('should create a Cost Center successfully with valid params', () => {
+      const costCenter = CostCenter.create(validCostCenterProps)
+
+      expect(costCenter).toBeInstanceOf(CostCenter)
+      expect(costCenter.getId().getValue()).toBe(validCostCenterProps.id.getValue())
+      expect(costCenter.getName()).toBe(validCostCenterProps.name)
+
+      expect(costCenter.getCreatedAt()).toBeInstanceOf(Date)
+      expect(costCenter.getUpdatedAt()).toBeInstanceOf(Date)
+      expect(costCenter.getDeletedAt()).toBeNull()
+    })
+  })
 })
