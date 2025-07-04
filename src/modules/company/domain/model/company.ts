@@ -28,4 +28,16 @@ export class Company {
       throw new InvalidCompanyParamException('Nome')
     }
   }
+
+  getId(): string {
+    return this.id
+  }
+
+  getName(): string {
+    return this.name
+  }
+
+  getDocument(): string {
+    return this.document
+  }
 }
