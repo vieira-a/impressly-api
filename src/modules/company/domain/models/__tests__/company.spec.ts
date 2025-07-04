@@ -1,8 +1,8 @@
 import { DuplicatedResourceException, InvalidCompanyParamException } from '../../exceptions'
 import { CompanyProps } from '../../types/company.props'
 import { CNPJ, ID } from '../../value-objects'
-import { Company } from '../company'
-import { CostCenter } from '../cost-center'
+import { Company, CostCenter, Departament } from '../'
+import {} from '../cost-center'
 
 const validCompanyProps: CompanyProps = {
   id: ID.create(),
@@ -63,6 +63,17 @@ describe('Company Model', () => {
 
       company.addCostCenter(costCenter)
       expect(() => company.addCostCenter(duplicatedCostCenter)).toThrow(DuplicatedResourceException)
+    })
+
+    it('should add a Departament successfully', () => {
+      const company = Company.create(validCompanyProps)
+      const departament = Departament.create({ id: ID.create(), name: 'Support' })
+
+      company.addDepartament(departament)
+
+      const result = company.getDepartaments()
+      expect(result).toHaveLength(1)
+      expect(result[0].getName()).toBe('Support')
     })
   })
 })
