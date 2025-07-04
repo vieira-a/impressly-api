@@ -20,7 +20,11 @@ export class Company {
   }
 
   validate() {
-    if (this.name.trim() === '' || this.name === undefined) {
+    if (
+      this.name === undefined ||
+      this.name === null ||
+      this.name.trim() === ''
+    ) {
       throw new InvalidCompanyParamException('Nome')
     }
   }
