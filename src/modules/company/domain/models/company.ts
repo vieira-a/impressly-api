@@ -1,7 +1,6 @@
 import { InvalidCompanyParamException } from '../exceptions'
 import { CompanyProps } from '../types/company.props'
-import { CNPJ } from '../value-objects/cnpj'
-import { ID } from '../value-objects/id'
+import { CNPJ, ID } from '../value-objects'
 
 export class Company {
   private constructor(

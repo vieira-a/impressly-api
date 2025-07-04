@@ -1,5 +1,4 @@
-import { CNPJ } from '../value-objects/cnpj'
-import { ID } from '../value-objects/id'
+import { CNPJ, ID } from '../value-objects'
 
 export type CompanyProps = {
   id: ID
