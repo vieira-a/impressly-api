@@ -1,4 +1,4 @@
-import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
+import { InvalidCompanyParamException } from '../../exceptions'
 import { ID } from '../value-objects/id'
 
 describe('ID', () => {

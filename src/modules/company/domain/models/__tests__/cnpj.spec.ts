@@ -1,4 +1,4 @@
-import { InvalidDocumentException } from '../../exceptions/invalid-document.exception'
+import { InvalidDocumentException } from '../../exceptions'
 import { CNPJValidator } from '../../validators/cnpj.validator'
 import { CNPJ } from '../value-objects/cnpj'
 

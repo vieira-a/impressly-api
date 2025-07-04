@@ -1,4 +1,4 @@
-import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
+import { InvalidCompanyParamException } from '../../exceptions'
 import { CompanyProps } from '../../types/company.props'
 import { CNPJ } from '../value-objects/cnpj'
 import { Company } from '../company'
