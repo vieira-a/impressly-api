@@ -8,13 +8,13 @@ const validCompanyProps: CompanyProps = {
 }
 
 describe('Company Model', () => {
-  it('should throws an InvalidCompanyParamException if name is empty', () => {
+  it('should throw an InvalidCompanyParamException if name is empty', () => {
     expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
       InvalidCompanyParamException,
     )
   })
 
-  it('should throws an InvalidCompanyParamException if name undefined', () => {
+  it('should throw an InvalidCompanyParamException if name undefined', () => {
     const invalidProps: Partial<CompanyProps> = {
       ...validCompanyProps,
       name: undefined,
