@@ -15,5 +15,11 @@ describe('Cost Center', () => {
         InvalidCostCenterParamException,
       )
     })
+
+    it('should throw an InvalidCostCenterParamException if name is undefined', () => {
+      expect(() =>
+        CostCenter.create({ ...validCostCenterProps, name: undefined as unknown as string }),
+      ).toThrow(InvalidCostCenterParamException)
+    })
   })
 })
