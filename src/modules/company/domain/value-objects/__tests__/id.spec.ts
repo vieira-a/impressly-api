@@ -15,4 +15,10 @@ describe('ID', () => {
       expect(() => ID.from('not-a-uuid')).toThrow(InvalidCompanyParamException)
     })
   })
+
+  describe('Success case', () => {
+    it('should create a new ID successfully as UUID string', () => {
+      expect(ID.create()).toBeInstanceOf(ID)
+    })
+  })
 })
