@@ -1,4 +1,4 @@
-import { InvalidCompanyParamException } from '../../exceptions'
+import { DuplicatedResourceException, InvalidCompanyParamException } from '../../exceptions'
 import { CompanyProps } from '../../types/company.props'
 import { CNPJ, ID } from '../../value-objects'
 import { Company } from '../company'
@@ -54,6 +54,15 @@ describe('Company Model', () => {
       const result = company.getCostCenters()
       expect(result).toHaveLength(1)
       expect(result[0].getName()).toBe('Financial')
+    })
+
+    it('should not allow duplicate cost center names', () => {
+      const company = Company.create(validCompanyProps)
+      const costCenter = CostCenter.create({ id: ID.create(), name: 'Financial' })
+      const duplicatedCostCenter = CostCenter.create({ id: ID.create(), name: 'Financial' })
+
+      company.addCostCenter(costCenter)
+      expect(() => company.addCostCenter(duplicatedCostCenter)).toThrow(DuplicatedResourceException)
     })
   })
 })
