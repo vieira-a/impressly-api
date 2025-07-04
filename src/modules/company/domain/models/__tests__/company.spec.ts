@@ -75,5 +75,16 @@ describe('Company Model', () => {
       expect(result).toHaveLength(1)
       expect(result[0].getName()).toBe('Support')
     })
+
+    it('should not allow duplicate departament names', () => {
+      const company = Company.create(validCompanyProps)
+      const departament = Departament.create({ id: ID.create(), name: 'Support' })
+      const duplicatedDepartament = Departament.create({ id: ID.create(), name: 'Support' })
+
+      company.addDepartament(departament)
+      expect(() => company.addDepartament(duplicatedDepartament)).toThrow(
+        DuplicatedResourceException,
+      )
+    })
   })
 })
