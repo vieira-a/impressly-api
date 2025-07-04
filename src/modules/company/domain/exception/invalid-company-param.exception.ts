@@ -1,4 +1,4 @@
-import { DomainException } from '../../../../common/exception/domain-exception'
+import { DomainException } from '@/common/exception/domain-exception'
 
 export class InvalidCompanyParamException extends DomainException {
   constructor(param: string) {
