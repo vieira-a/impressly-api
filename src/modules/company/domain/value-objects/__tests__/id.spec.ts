@@ -7,9 +7,7 @@ describe('ID', () => {
   })
 
   it('should throw an InvalidCompanyParamException if ID is undefined', () => {
-    expect(() => ID.from(undefined as unknown as string)).toThrow(
-      InvalidCompanyParamException,
-    )
+    expect(() => ID.from(undefined as unknown as string)).toThrow(InvalidCompanyParamException)
   })
 
   it('should throw InvalidCompanyParamException if ID is invalid', () => {
