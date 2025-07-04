@@ -21,4 +21,8 @@ export class CostCenter extends BaseModel<ID> {
       throw new InvalidCostCenterParamException('Nome')
     }
   }
+
+  getName(): string {
+    return this.name
+  }
 }
