@@ -44,4 +44,17 @@ describe('CNPJ', () => {
     expect(() => CNPJ.create(invalidCnpj)).toThrow(InvalidDocumentException)
     expect(spy).toHaveBeenCalledWith(invalidCnpj)
   })
+
+  it('should create a new CNPJ with valid 14 numeric digits', () => {
+    const validCnpj = '32182885000183'
+
+    const spy = jest
+      .spyOn(CNPJValidator.prototype, 'validate')
+      .mockReturnValue(true)
+
+    const cnpj = CNPJ.create(validCnpj)
+
+    expect(cnpj).toBeInstanceOf(CNPJ)
+    expect(spy).toHaveBeenCalledWith(validCnpj)
+  })
 })
