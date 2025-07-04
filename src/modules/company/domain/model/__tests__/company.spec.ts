@@ -31,4 +31,13 @@ describe('Company Model', () => {
       }),
     ).toThrow(InvalidCompanyParamException)
   })
+
+  it('should throw an InvalidCompanyParamException if name is only spaces', () => {
+    expect(() =>
+      Company.create({
+        ...validCompanyProps,
+        name: '  ',
+      }),
+    ).toThrow(InvalidCompanyParamException)
+  })
 })
