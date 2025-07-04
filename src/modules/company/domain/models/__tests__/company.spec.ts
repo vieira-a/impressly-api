@@ -1,14 +1,24 @@
 import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
 import { CompanyProps } from '../../types/company.props'
 import { Company } from '../company'
+import { ID } from '../id'
 
 const validCompanyProps: CompanyProps = {
-  id: '04fd8bf8-c9bc-47af-9d4c-60acb76fb91d',
+  id: ID.create(),
   name: 'Contoso',
   document: '32182885000183',
 }
 
 describe('Company Model', () => {
+  it('should throw an InvalidCompanyParamException if ID is empty', () => {
+    expect(() =>
+      Company.create({
+        ...validCompanyProps,
+        id: ID.from(''),
+      }),
+    ).toThrow(InvalidCompanyParamException)
+  })
+
   it('should throw an InvalidCompanyParamException if name is empty', () => {
     expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
       InvalidCompanyParamException,
@@ -47,7 +57,7 @@ describe('Company Model', () => {
 
     expect(company).toBeInstanceOf(Company)
 
-    expect(company.getId()).toBe(validCompanyProps.id)
+    expect(company.getId()).toBe(validCompanyProps.id.getValue())
     expect(company.getName()).toBe(validCompanyProps.name)
     expect(company.getDocument()).toBe(validCompanyProps.document)
   })
