@@ -1,4 +1,4 @@
-import { InvalidCompanyParamException } from '../exceptions'
+import { DuplicatedResourceException, InvalidCompanyParamException } from '../exceptions'
 import { CompanyProps } from '../types/company.props'
 import { CNPJ, ID } from '../value-objects'
 import { BaseModel } from './base'
@@ -27,6 +27,14 @@ export class Company extends BaseModel<ID> {
   }
 
   public addCostCenter(costCenter: CostCenter): void {
+    const costCenterAlreadyExists = this.costCenter.some(
+      (cc) => cc.getName().toLowerCase() === costCenter.getName().toLowerCase(),
+    )
+
+    if (costCenterAlreadyExists) {
+      throw new DuplicatedResourceException('Nome')
+    }
+
     this.costCenter.push(costCenter)
   }
 
