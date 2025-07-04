@@ -1,4 +1,4 @@
-import { InvalidCompanyParamException } from '../exception/invalid-company-param.exception'
+import { InvalidCompanyParamException } from '../exceptions/invalid-company-param.exception'
 
 export type CompanyProps = {
   id: string
