@@ -8,12 +8,13 @@ const validCostCenterProps: CostCenterProps = {
   name: 'Financial',
 }
 
-describe('Cost Center', () => {
+describe('Cost Center Model', () => {
   describe('Params validations', () => {
     const invalidNames = [
       ['', 'empty string'],
       [undefined, 'undefined value'],
       [null, 'null value'],
+      ['  ', 'blank spaces'],
     ]
 
     test.each(invalidNames)(
