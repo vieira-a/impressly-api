@@ -12,9 +12,6 @@ export class Company {
     private readonly name: string,
     private readonly document: string,
   ) {
-    this.id = id
-    this.document = document
-    this.name = name
     this.validate()
   }
 
@@ -23,7 +20,7 @@ export class Company {
   }
 
   validate() {
-    if (this.name === '' || this.name === undefined) {
+    if (this.name.trim() === '' || this.name === undefined) {
       throw new InvalidCompanyParamException('Nome')
     }
   }
