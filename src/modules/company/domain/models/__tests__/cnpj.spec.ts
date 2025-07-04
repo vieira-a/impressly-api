@@ -1,5 +1,5 @@
 import { InvalidDocumentException } from '../../exceptions/invalid-document.exception'
-import { CNPJValidator } from '../../validator/cnpj.validator'
+import { CNPJValidator } from '../../validators/cnpj.validator'
 import { CNPJ } from '../value-objects/cnpj'
 
 describe('CNPJ', () => {
