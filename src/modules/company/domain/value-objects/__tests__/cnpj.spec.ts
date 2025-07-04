@@ -3,48 +3,49 @@ import { CNPJValidator } from '../../validators'
 import { CNPJ } from '../cnpj'
 
 describe('CNPJ', () => {
-  it('should throw InvalidDocumentException for invalid CNPJ', () => {
-    const invalidCNPJ = '12345678910111'
-    const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
+  describe('Params validations', () => {
+    it('should throw InvalidDocumentException for invalid CNPJ', () => {
+      const invalidCNPJ = '12345678910111'
+      const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
 
-    expect(() => CNPJ.create(invalidCNPJ)).toThrow(InvalidDocumentException)
-    expect(spy).toHaveBeenCalledWith(invalidCNPJ)
+      expect(() => CNPJ.create(invalidCNPJ)).toThrow(InvalidDocumentException)
+      expect(spy).toHaveBeenCalledWith(invalidCNPJ)
+    })
+
+    it('should throw InvalidDocumentException if CNPJ has no numeric digits', () => {
+      const nonNumericCnpj = 'non-numeric-digits'
+      const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
+
+      expect(() => CNPJ.create(nonNumericCnpj)).toThrow(InvalidDocumentException)
+      expect(spy).toHaveBeenCalledWith('')
+    })
+
+    it('should throw InvalidDocumentException if CNPJ has less than 14 numeric digits', () => {
+      const invalidCnpj = '12345678910'
+      const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
+
+      expect(() => CNPJ.create(invalidCnpj)).toThrow(InvalidDocumentException)
+      expect(spy).toHaveBeenCalledWith(invalidCnpj)
+    })
+
+    it('should throw InvalidDocumentException if CNPJ has more than 14 numeric digits', () => {
+      const invalidCnpj = '123456789101112'
+      const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
+
+      expect(() => CNPJ.create(invalidCnpj)).toThrow(InvalidDocumentException)
+      expect(spy).toHaveBeenCalledWith(invalidCnpj)
+    })
   })
 
-  it('should throw InvalidDocumentException if CNPJ has no numeric digits', () => {
-    const nonNumericCnpj = 'non-numeric-digits'
-    const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
+  describe('Success case', () => {
+    it('should create a new CNPJ with valid 14 numeric digits', () => {
+      const validCnpj = '32182885000183'
+      const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(true)
 
-    expect(() => CNPJ.create(nonNumericCnpj)).toThrow(InvalidDocumentException)
-    expect(spy).toHaveBeenCalledWith('')
-  })
+      const cnpj = CNPJ.create(validCnpj)
 
-  it('should throw InvalidDocumentException if CNPJ has less than 14 numeric digits', () => {
-    const invalidCnpj = '12345678910'
-
-    const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
-
-    expect(() => CNPJ.create(invalidCnpj)).toThrow(InvalidDocumentException)
-    expect(spy).toHaveBeenCalledWith(invalidCnpj)
-  })
-
-  it('should throw InvalidDocumentException if CNPJ has more than 14 numeric digits', () => {
-    const invalidCnpj = '123456789101112'
-
-    const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(false)
-
-    expect(() => CNPJ.create(invalidCnpj)).toThrow(InvalidDocumentException)
-    expect(spy).toHaveBeenCalledWith(invalidCnpj)
-  })
-
-  it('should create a new CNPJ with valid 14 numeric digits', () => {
-    const validCnpj = '32182885000183'
-
-    const spy = jest.spyOn(CNPJValidator.prototype, 'validate').mockReturnValue(true)
-
-    const cnpj = CNPJ.create(validCnpj)
-
-    expect(cnpj).toBeInstanceOf(CNPJ)
-    expect(spy).toHaveBeenCalledWith(validCnpj)
+      expect(cnpj).toBeInstanceOf(CNPJ)
+      expect(spy).toHaveBeenCalledWith(validCnpj)
+    })
   })
 })
