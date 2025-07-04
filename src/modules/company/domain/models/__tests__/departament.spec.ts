@@ -26,4 +26,18 @@ describe('Departament Model', () => {
       },
     )
   })
+
+  describe('Success case', () => {
+    it('should create a Departament successfully with valid params', () => {
+      const departament = Departament.create(validDepartamentProps)
+
+      expect(departament).toBeInstanceOf(Departament)
+      expect(departament.getId().getValue()).toBe(validDepartamentProps.id.getValue())
+      expect(departament.getName()).toBe(validDepartamentProps.name)
+
+      expect(departament.getCreatedAt()).toBeInstanceOf(Date)
+      expect(departament.getUpdatedAt()).toBeInstanceOf(Date)
+      expect(departament.getDeletedAt()).toBeNull()
+    })
+  })
 })
