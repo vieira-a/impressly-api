@@ -3,23 +3,26 @@ import { CNPJValidator } from '../validator/cnpj.validator'
 
 export class CNPJ {
   private readonly value: string
-  private readonly cnpjValidator: CNPJValidator
 
-  constructor(value: string, cnpjValidator: CNPJValidator) {
+  constructor(value: string) {
     this.value = value
-    this.cnpjValidator = cnpjValidator
     this.validate()
   }
 
-  public static create(value: string, cnpjValidator: CNPJValidator): CNPJ {
-    return new CNPJ(value, cnpjValidator)
+  public static create(value: string): CNPJ {
+    return new CNPJ(value)
+  }
+
+  getValue(): string {
+    return this.value
   }
 
   private validate(): void {
-    const normalizedCnpj = this.value.replace(/\D/g, '')
+    const normalized = this.value.replace(/\D/g, '')
+    const validator = new CNPJValidator()
 
-    if (!this.cnpjValidator.validate(normalizedCnpj)) {
-      throw new InvalidDocumentException(`CNPJ: ${normalizedCnpj}`)
+    if (!validator.validate(normalized)) {
+      throw new InvalidDocumentException(`CNPJ: ${normalized}`)
     }
   }
 }
