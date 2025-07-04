@@ -2,6 +2,7 @@ import { InvalidCompanyParamException } from '../../exceptions'
 import { CompanyProps } from '../../types/company.props'
 import { CNPJ, ID } from '../../value-objects'
 import { Company } from '../company'
+import { CostCenter } from '../cost-center'
 
 const validCompanyProps: CompanyProps = {
   id: ID.create(),
@@ -40,6 +41,19 @@ describe('Company Model', () => {
       expect(company.getCreatedAt()).toBeInstanceOf(Date)
       expect(company.getUpdatedAt()).toBeInstanceOf(Date)
       expect(company.getDeletedAt()).toBeNull()
+    })
+  })
+
+  describe('Relations and dependencies', () => {
+    it('should add a CostCenter successfully', () => {
+      const company = Company.create(validCompanyProps)
+      const costCenter = CostCenter.create({ id: ID.create(), name: 'Financial' })
+
+      company.addCostCenter(costCenter)
+
+      const result = company.getCostCenters()
+      expect(result).toHaveLength(1)
+      expect(result[0].getName()).toBe('Financial')
     })
   })
 })
