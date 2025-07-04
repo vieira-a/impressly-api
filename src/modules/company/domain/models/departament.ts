@@ -21,4 +21,8 @@ export class Departament extends BaseModel<ID> {
       throw new InvalidDepartamentParamException('Nome')
     }
   }
+
+  getName(): string {
+    return this.name
+  }
 }
