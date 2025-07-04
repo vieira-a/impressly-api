@@ -1,6 +1,6 @@
 import { InvalidCompanyParamException } from '../exception/invalid-company-param.exception'
 
-type CompanyProps = {
+export type CompanyProps = {
   id: string
   name: string
   document: string
@@ -23,7 +23,7 @@ export class Company {
   }
 
   validate() {
-    if (this.name === '') {
+    if (this.name === '' || this.name === undefined) {
       throw new InvalidCompanyParamException('Nome')
     }
   }
