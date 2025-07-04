@@ -50,9 +50,13 @@ describe('Company Model', () => {
       const company = Company.create({ ...validCompanyProps })
 
       expect(company).toBeInstanceOf(Company)
-      expect(company.getId()).toBe(validCompanyProps.id.getValue())
+      expect(company.getId().getValue()).toBe(validCompanyProps.id.getValue())
       expect(company.getName()).toBe(validCompanyProps.name)
       expect(company.getDocument()).toBe(validCompanyProps.document.getValue())
+
+      expect(company.getCreatedAt()).toBeInstanceOf(Date)
+      expect(company.getUpdatedAt()).toBeInstanceOf(Date)
+      expect(company.getDeletedAt()).toBeNull()
     })
   })
 })
