@@ -10,22 +10,19 @@ const validCostCenterProps: CostCenterProps = {
 
 describe('Cost Center', () => {
   describe('Params validations', () => {
-    it('should throw an InvalidCostCenterParamException if name is empty', () => {
-      expect(() => CostCenter.create({ ...validCostCenterProps, name: '' })).toThrow(
-        InvalidCostCenterParamException,
-      )
-    })
+    const invalidNames = [
+      ['', 'empty string'],
+      [undefined, 'undefined value'],
+      [null, 'null value'],
+    ]
 
-    it('should throw an InvalidCostCenterParamException if name is undefined', () => {
-      expect(() =>
-        CostCenter.create({ ...validCostCenterProps, name: undefined as unknown as string }),
-      ).toThrow(InvalidCostCenterParamException)
-    })
-
-    it('should throw an InvalidCostCenterParamException if name is null', () => {
-      expect(() =>
-        CostCenter.create({ ...validCostCenterProps, name: null as unknown as string }),
-      ).toThrow(InvalidCostCenterParamException)
-    })
+    test.each(invalidNames)(
+      'should throw InvalidCostCenterParamException when name is %s (%s)',
+      (name: string) => {
+        expect(() =>
+          CostCenter.create({ ...validCostCenterProps, name: name as unknown as string }),
+        ).toThrow(InvalidCostCenterParamException)
+      },
+    )
   })
 })
