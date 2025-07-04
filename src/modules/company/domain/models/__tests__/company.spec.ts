@@ -1,5 +1,6 @@
 import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
-import { Company, CompanyProps } from '../company'
+import { CompanyProps } from '../../types/company.props'
+import { Company } from '../company'
 
 const validCompanyProps: CompanyProps = {
   id: '04fd8bf8-c9bc-47af-9d4c-60acb76fb91d',

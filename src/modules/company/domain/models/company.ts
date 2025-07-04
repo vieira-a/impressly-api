@@ -1,10 +1,5 @@
 import { InvalidCompanyParamException } from '../exceptions/invalid-company-param.exception'
-
-export type CompanyProps = {
-  id: string
-  name: string
-  document: string
-}
+import { CompanyProps } from '../types/company.props'
 
 export class Company {
   private constructor(
