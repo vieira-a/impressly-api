@@ -30,4 +30,18 @@ describe('CNPJ', () => {
     )
     expect(validateMock).toHaveBeenCalledWith('')
   })
+
+  it('should throw InvalidDocumentException if CNPJ has less than 14 numeric digits', () => {
+    const invalidCnpj = '12345678910'
+
+    const validateMock = jest.fn().mockReturnValue(false)
+    const mockValidator: CNPJValidator = {
+      validate: validateMock,
+    }
+
+    expect(() => CNPJ.create(invalidCnpj, mockValidator)).toThrow(
+      InvalidDocumentException,
+    )
+    expect(validateMock).toHaveBeenCalledWith(invalidCnpj)
+  })
 })
