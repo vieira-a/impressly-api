@@ -25,6 +25,10 @@ describe('Company Model', () => {
     )
   })
 
+  it('should throw an InvalidCompanyParamException if UUID is invalid', () => {
+    expect(() => ID.from('invalid-uuid')).toThrow(InvalidCompanyParamException)
+  })
+
   it('should throw an InvalidCompanyParamException if name is empty', () => {
     expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
       InvalidCompanyParamException,
