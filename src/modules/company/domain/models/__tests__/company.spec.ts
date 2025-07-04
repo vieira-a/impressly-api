@@ -11,38 +11,21 @@ const validCompanyProps: CompanyProps = {
 
 describe('Company Model', () => {
   describe('Params validations', () => {
-    it('should throw an InvalidCompanyParamException if name is empty', () => {
-      expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
-        InvalidCompanyParamException,
-      )
-    })
+    const invalidNames = [
+      ['', 'empty string'],
+      [undefined, 'undefined value'],
+      [null, 'null value'],
+      ['  ', 'blank spaces'],
+    ]
 
-    it('should throw an InvalidCompanyParamException if name is undefined', () => {
-      expect(() =>
-        Company.create({
-          ...validCompanyProps,
-          name: undefined as unknown as string,
-        }),
-      ).toThrow(InvalidCompanyParamException)
-    })
-
-    it('should throw an InvalidCompanyParamException if name is null', () => {
-      expect(() =>
-        Company.create({
-          ...validCompanyProps,
-          name: null as unknown as string,
-        }),
-      ).toThrow(InvalidCompanyParamException)
-    })
-
-    it('should throw an InvalidCompanyParamException if name is only spaces', () => {
-      expect(() =>
-        Company.create({
-          ...validCompanyProps,
-          name: '  ',
-        }),
-      ).toThrow(InvalidCompanyParamException)
-    })
+    test.each(invalidNames)(
+      'should throw InvalidCompanyParamException when name is %s (%s)',
+      (name: string) => {
+        expect(() =>
+          Company.create({ ...validCompanyProps, name: name as unknown as string }),
+        ).toThrow(InvalidCompanyParamException)
+      },
+    )
   })
 
   describe('Success case', () => {
