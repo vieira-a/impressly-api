@@ -16,4 +16,18 @@ describe('CNPJ', () => {
     )
     expect(validateMock).toHaveBeenCalledWith(invalidCNPJ)
   })
+
+  it('should throw InvalidDocumentException if CNPJ has no numeric digits', () => {
+    const nonNumericCnpj = 'non-numeric-digits'
+
+    const validateMock = jest.fn().mockReturnValue(false)
+    const mockValidator: CNPJValidator = {
+      validate: validateMock,
+    }
+
+    expect(() => CNPJ.create(nonNumericCnpj, mockValidator)).toThrow(
+      InvalidDocumentException,
+    )
+    expect(validateMock).toHaveBeenCalledWith('')
+  })
 })
