@@ -1,12 +1,13 @@
 import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
 import { CompanyProps } from '../../types/company.props'
+import { CNPJ } from '../cnpj'
 import { Company } from '../company'
 import { ID } from '../id'
 
 const validCompanyProps: CompanyProps = {
   id: ID.create(),
   name: 'Contoso',
-  document: '32182885000183',
+  document: CNPJ.create('32182885000183'),
 }
 
 describe('Company Model', () => {
@@ -50,6 +51,6 @@ describe('Company Model', () => {
 
     expect(company.getId()).toBe(validCompanyProps.id.getValue())
     expect(company.getName()).toBe(validCompanyProps.name)
-    expect(company.getDocument()).toBe(validCompanyProps.document)
+    expect(company.getDocument()).toBe(validCompanyProps.document.getValue())
   })
 })

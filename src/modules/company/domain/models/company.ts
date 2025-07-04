@@ -1,12 +1,13 @@
 import { InvalidCompanyParamException } from '../exceptions/invalid-company-param.exception'
 import { CompanyProps } from '../types/company.props'
+import { CNPJ } from './cnpj'
 import { ID } from './id'
 
 export class Company {
   private constructor(
     private readonly id: ID,
     private readonly name: string,
-    private readonly document: string,
+    private readonly document: CNPJ,
   ) {
     this.validate()
   }
@@ -34,6 +35,6 @@ export class Company {
   }
 
   getDocument(): string {
-    return this.document
+    return this.document.getValue()
   }
 }
