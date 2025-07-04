@@ -1,8 +1,8 @@
 import { InvalidCompanyParamException } from '../../exceptions'
 import { CompanyProps } from '../../types/company.props'
-import { CNPJ } from '../value-objects/cnpj'
+import { CNPJ } from '../../value-objects/cnpj'
 import { Company } from '../company'
-import { ID } from '../value-objects/id'
+import { ID } from '../../value-objects/id'
 
 const validCompanyProps: CompanyProps = {
   id: ID.create(),

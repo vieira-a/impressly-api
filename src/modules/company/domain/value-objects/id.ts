@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { InvalidCompanyParamException } from '../../exceptions'
+import { InvalidCompanyParamException } from '../exceptions'
 
 export class ID {
   private readonly id: string
