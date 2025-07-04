@@ -1,13 +1,13 @@
 import { DuplicatedResourceException, InvalidCompanyParamException } from '../exceptions'
 import { CompanyProps } from '../types/company.props'
 import { CNPJ, ID } from '../value-objects'
-import { BaseModel } from './base'
-import { CostCenter } from './cost-center'
+import { BaseModel, CostCenter, Departament } from './'
 
 export class Company extends BaseModel<ID> {
   private readonly name: string
   private readonly document: CNPJ
   private readonly costCenter: CostCenter[] = []
+  private readonly departament: Departament[] = []
 
   private constructor(id: ID, name: string, document: CNPJ) {
     super(id)
@@ -38,6 +38,10 @@ export class Company extends BaseModel<ID> {
     this.costCenter.push(costCenter)
   }
 
+  public addDepartament(departament: Departament): void {
+    this.departament.push(departament)
+  }
+
   getName(): string {
     return this.name
   }
@@ -48,5 +52,9 @@ export class Company extends BaseModel<ID> {
 
   getCostCenters(): CostCenter[] {
     return [...this.costCenter]
+  }
+
+  getDepartaments(): Departament[] {
+    return [...this.departament]
   }
 }
