@@ -10,46 +10,49 @@ const validCompanyProps: CompanyProps = {
 }
 
 describe('Company Model', () => {
-  it('should throw an InvalidCompanyParamException if name is empty', () => {
-    expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
-      InvalidCompanyParamException,
-    )
+  describe('Params validations', () => {
+    it('should throw an InvalidCompanyParamException if name is empty', () => {
+      expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
+        InvalidCompanyParamException,
+      )
+    })
+
+    it('should throw an InvalidCompanyParamException if name is undefined', () => {
+      expect(() =>
+        Company.create({
+          ...validCompanyProps,
+          name: undefined as unknown as string,
+        }),
+      ).toThrow(InvalidCompanyParamException)
+    })
+
+    it('should throw an InvalidCompanyParamException if name is null', () => {
+      expect(() =>
+        Company.create({
+          ...validCompanyProps,
+          name: null as unknown as string,
+        }),
+      ).toThrow(InvalidCompanyParamException)
+    })
+
+    it('should throw an InvalidCompanyParamException if name is only spaces', () => {
+      expect(() =>
+        Company.create({
+          ...validCompanyProps,
+          name: '  ',
+        }),
+      ).toThrow(InvalidCompanyParamException)
+    })
   })
 
-  it('should throw an InvalidCompanyParamException if name is undefined', () => {
-    expect(() =>
-      Company.create({
-        ...validCompanyProps,
-        name: undefined as unknown as string,
-      }),
-    ).toThrow(InvalidCompanyParamException)
-  })
+  describe('Success case', () => {
+    it('should create a Company successfully with valid params', () => {
+      const company = Company.create({ ...validCompanyProps })
 
-  it('should throw an InvalidCompanyParamException if name is null', () => {
-    expect(() =>
-      Company.create({
-        ...validCompanyProps,
-        name: null as unknown as string,
-      }),
-    ).toThrow(InvalidCompanyParamException)
-  })
-
-  it('should throw an InvalidCompanyParamException if name is only spaces', () => {
-    expect(() =>
-      Company.create({
-        ...validCompanyProps,
-        name: '  ',
-      }),
-    ).toThrow(InvalidCompanyParamException)
-  })
-
-  it('should create a Company successfully with valid params', () => {
-    const company = Company.create({ ...validCompanyProps })
-
-    expect(company).toBeInstanceOf(Company)
-
-    expect(company.getId()).toBe(validCompanyProps.id.getValue())
-    expect(company.getName()).toBe(validCompanyProps.name)
-    expect(company.getDocument()).toBe(validCompanyProps.document.getValue())
+      expect(company).toBeInstanceOf(Company)
+      expect(company.getId()).toBe(validCompanyProps.id.getValue())
+      expect(company.getName()).toBe(validCompanyProps.name)
+      expect(company.getDocument()).toBe(validCompanyProps.document.getValue())
+    })
   })
 })
