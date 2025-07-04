@@ -1,5 +1,5 @@
 import { InvalidCompanyParamException } from '../../exceptions/invalid-company-param.exception'
-import { ID } from '../id'
+import { ID } from '../value-objects/id'
 
 describe('ID', () => {
   it('should throw an InvalidCompanyParamException if ID is empty', () => {
