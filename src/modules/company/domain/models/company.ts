@@ -1,9 +1,10 @@
 import { InvalidCompanyParamException } from '../exceptions/invalid-company-param.exception'
 import { CompanyProps } from '../types/company.props'
+import { ID } from './id'
 
 export class Company {
   private constructor(
-    private readonly id: string,
+    private readonly id: ID,
     private readonly name: string,
     private readonly document: string,
   ) {
@@ -14,7 +15,7 @@ export class Company {
     return new Company(props.id, props.name, props.document)
   }
 
-  validate() {
+  private validate(): void {
     if (
       this.name === undefined ||
       this.name === null ||
@@ -25,7 +26,7 @@ export class Company {
   }
 
   getId(): string {
-    return this.id
+    return this.id.getValue()
   }
 
   getName(): string {

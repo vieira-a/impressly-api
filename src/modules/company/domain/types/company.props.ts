@@ -1,5 +1,7 @@
+import { ID } from '../models/id'
+
 export type CompanyProps = {
-  id: string
+  id: ID
   name: string
   document: string
 }
