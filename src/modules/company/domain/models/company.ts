@@ -39,6 +39,13 @@ export class Company extends BaseModel<ID> {
   }
 
   public addDepartament(departament: Departament): void {
+    const departamentAlreadyExists = this.departament.some(
+      (dep) => dep.getName().toLowerCase() === departament.getName().toLowerCase(),
+    )
+
+    if (departamentAlreadyExists) {
+      throw new DuplicatedResourceException('Departamento')
+    }
     this.departament.push(departament)
   }
 
