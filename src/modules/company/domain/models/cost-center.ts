@@ -17,7 +17,7 @@ export class CostCenter extends BaseModel<ID> {
   }
 
   private validate(): void {
-    if (this.name.trim() === '') {
+    if (this.name === undefined || this.name.trim() === '') {
       throw new InvalidCostCenterParamException('Nome')
     }
   }
