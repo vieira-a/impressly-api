@@ -19,6 +19,12 @@ describe('Company Model', () => {
     ).toThrow(InvalidCompanyParamException)
   })
 
+  it('should throw an InvalidCompanyParamException if ID is undefined', () => {
+    expect(() => ID.from(undefined as unknown as string)).toThrow(
+      InvalidCompanyParamException,
+    )
+  })
+
   it('should throw an InvalidCompanyParamException if name is empty', () => {
     expect(() => Company.create({ ...validCompanyProps, name: '' })).toThrow(
       InvalidCompanyParamException,
