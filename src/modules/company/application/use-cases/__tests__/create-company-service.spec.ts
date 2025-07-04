@@ -1,33 +1,61 @@
+import { Test, TestingModule } from '@nestjs/testing'
+import { Company } from '../../../domain/models'
+import { DuplicatedResourceException } from '../../../domain/exceptions'
 import { CreateCompanyDto } from '../../dto/create-company.dto'
-import { CompanyRepository } from '../../interfaces/company.repository'
 import { CreateCompanyService } from '../create-company.service'
-import { DuplicatedResourceException } from '@/modules/company/domain/exceptions'
+import { CompanyRepository } from '../../interfaces/company.repository'
 
 describe('CreateCompanyService', () => {
-  let repository: CompanyRepository
   let service: CreateCompanyService
 
-  const createCompanyDto: CreateCompanyDto = {
+  const mockCompanyRepository: Partial<CompanyRepository> = {
+    existsByName: jest.fn(),
+    save: jest.fn((company: Company) => Promise.resolve(company)),
+  }
+
+  const validCompany: CreateCompanyDto = {
     name: 'Contoso',
     document: '32182885000183',
   }
 
-  beforeEach(() => {
-    repository = {
-      existsByName: jest.fn(),
-      save: jest.fn(),
-    } as unknown as CompanyRepository
+  beforeEach(async () => {
+    jest.clearAllMocks()
 
-    service = new CreateCompanyService(repository)
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        CreateCompanyService,
+        {
+          provide: 'CompanyRepository',
+          useValue: mockCompanyRepository,
+        },
+      ],
+    }).compile()
+
+    service = module.get(CreateCompanyService)
   })
 
   it('should throw DuplicatedResourceException if company already exists', async () => {
-    const existsSpy = jest.spyOn(repository, 'existsByName').mockResolvedValue(true)
-    const saveSpy = jest.spyOn(repository, 'save')
+    const existsSpy = jest.spyOn(mockCompanyRepository, 'existsByName').mockResolvedValue(true)
+    const saveSpy = jest.spyOn(mockCompanyRepository, 'save')
 
-    await expect(service.execute(createCompanyDto)).rejects.toThrow(DuplicatedResourceException)
+    await expect(service.execute(validCompany)).rejects.toThrow(DuplicatedResourceException)
 
-    expect(existsSpy).toHaveBeenCalledWith(createCompanyDto.name)
+    expect(existsSpy).toHaveBeenCalledWith(validCompany.name)
     expect(saveSpy).not.toHaveBeenCalled()
+  })
+
+  it('should create and save company with valid params', async () => {
+    jest.spyOn(mockCompanyRepository, 'existsByName').mockResolvedValue(false)
+    jest
+      .spyOn(mockCompanyRepository, 'save')
+      .mockImplementation((company: Company) => Promise.resolve(company))
+
+    const result = await service.execute(validCompany)
+
+    expect(mockCompanyRepository.existsByName).toHaveBeenCalledWith(validCompany.name)
+
+    expect(result).toBeInstanceOf(Company)
+    expect(result.getName()).toBe(validCompany.name)
+    expect(result.getDocument()).toBe(validCompany.document)
   })
 })
