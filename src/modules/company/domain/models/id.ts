@@ -22,7 +22,7 @@ export class ID {
   }
 
   private validate(): void {
-    if (this.id.trim() === '') {
+    if (this.id === undefined || this.id === null || this.id.trim() === '') {
       throw new InvalidCompanyParamException('ID')
     }
   }
