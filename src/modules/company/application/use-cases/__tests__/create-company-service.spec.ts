@@ -4,6 +4,7 @@ import { DuplicatedResourceException } from '../../../domain/exceptions'
 import { CreateCompanyDto } from '../../dto/create-company.dto'
 import { CreateCompanyService } from '../create-company.service'
 import { CompanyRepository } from '../../interfaces/company.repository'
+import { CNPJ, ID } from '@/modules/company/domain/value-objects'
 
 describe('CreateCompanyService', () => {
   let service: CreateCompanyService
@@ -46,16 +47,34 @@ describe('CreateCompanyService', () => {
 
   it('should create and save company with valid params', async () => {
     jest.spyOn(mockCompanyRepository, 'existsByName').mockResolvedValue(false)
-    jest
+    const saveSpy = jest
       .spyOn(mockCompanyRepository, 'save')
       .mockImplementation((company: Company) => Promise.resolve(company))
+
+    const fakeId = ID.create()
+    const fakeCnpj = CNPJ.create('32182885000183')
+
+    jest.spyOn(ID, 'create').mockReturnValue(fakeId)
+    jest.spyOn(CNPJ, 'create').mockReturnValue(fakeCnpj)
+
+    const companyCreateSpy = jest.spyOn(Company, 'create')
 
     const result = await service.execute(validCompany)
 
     expect(mockCompanyRepository.existsByName).toHaveBeenCalledWith(validCompany.name)
+    expect(saveSpy).toHaveBeenCalledTimes(1)
 
-    expect(result).toBeInstanceOf(Company)
-    expect(result.getName()).toBe(validCompany.name)
-    expect(result.getDocument()).toBe(validCompany.document)
+    const savedCompany = saveSpy.mock.calls[0][0]
+    expect(savedCompany).toBeInstanceOf(Company)
+    expect(savedCompany.getName()).toBe(validCompany.name)
+    expect(savedCompany.getDocument()).toBe(validCompany.document)
+
+    expect(result).toBe(savedCompany)
+
+    expect(companyCreateSpy).toHaveBeenCalledWith({
+      id: fakeId,
+      name: validCompany.name,
+      document: fakeCnpj,
+    })
   })
 })
