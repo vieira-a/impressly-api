@@ -40,4 +40,14 @@ describe('Company Model', () => {
       }),
     ).toThrow(InvalidCompanyParamException)
   })
+
+  it('should create a Company successfully with valid params', () => {
+    const company = Company.create({ ...validCompanyProps })
+
+    expect(company).toBeInstanceOf(Company)
+
+    expect(company.getId()).toBe(validCompanyProps.id)
+    expect(company.getName()).toBe(validCompanyProps.name)
+    expect(company.getDocument()).toBe(validCompanyProps.document)
+  })
 })
